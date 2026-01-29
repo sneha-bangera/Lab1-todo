@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
+import os
 
 app = Flask(__name__)
 
@@ -52,9 +53,15 @@ def toggle(id):
     conn.close()
     return redirect("/")
 
-import os
+@app.route("/edit/<int:id>", methods=["POST"])
+def edit(id):
+    new_text = request.form["edited_task"]
+    conn = sqlite3.connect("database.db")
+    conn.execute("UPDATE tasks SET content=? WHERE id=?", (new_text, id))
+    conn.commit()
+    conn.close()
+    return redirect("", 204)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-

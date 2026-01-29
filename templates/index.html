@@ -1,27 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>To-Do App</title>
+    <title>Sticky To-Do App</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<h1>My To-Do List</h1>
+<h1>Sticky Notes To-Do</h1>
 
-<form action="/add" method="POST">
-    <input type="text" name="task" placeholder="Enter task" required>
+<form action="/add" method="POST" class="add-form">
+    <input type="text" name="task" placeholder="Add a new task..." required>
     <button type="submit">Add</button>
 </form>
 
-<ul>
+<div class="notes">
     {% for task in tasks %}
-    <li class="{{ 'done' if task[2] else '' }}">
-        {{ task[1] }}
-        <a href="/toggle/{{ task[0] }}">✔</a>
-        <a href="/delete/{{ task[0] }}">❌</a>
-    </li>
+    <div class="note {{ 'done' if task[2] else '' }}">
+
+        <!-- <input type="text"
+               value="{{ task[1] }}"
+               onchange="editTask({{ task[0] }}, this.value)"> -->
+        <input type="text"
+       value="{{ task[1] }}"
+       data-id="{{ task[0] }}"
+       class="task-input">
+
+
+        <div class="actions">
+            <a href="/toggle/{{ task[0] }}">✔</a>
+            <a href="/delete/{{ task[0] }}">❌</a>
+        </div>
+
+    </div>
     {% endfor %}
-</ul>
+</div>
+
+<script>
+function editTask(id, value) {
+    fetch(`/edit/${id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "edited_task=" + encodeURIComponent(value)
+    });
+}
+</script>
+<script>
+document.querySelectorAll(".task-input").forEach(input => {
+    input.addEventListener("change", function () {
+        const id = this.dataset.id;
+        const value = this.value;
+
+        fetch(`/edit/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "edited_task=" + encodeURIComponent(value)
+        });
+    });
+});
+</script>
 
 </body>
 </html>

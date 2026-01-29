@@ -1,29 +1,84 @@
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
     text-align: center;
-    margin-top: 50px;
+    padding: 30px;
 }
 
-input {
+h1 {
+    margin-bottom: 20px;
+}
+
+.add-form input {
     padding: 10px;
+    width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.add-form button {
+    padding: 10px 15px;
+    margin-left: 5px;
+    border: none;
+    background: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.note {
+    background: #fff9a6; /* light yellow sticky */
+    padding: 15px;
     width: 200px;
+    min-height: 120px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+    text-align: left;
+    position: relative;
 }
 
-button {
-    padding: 10px;
+.note input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 16px;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+.note input:focus {
+    outline: none;
 }
 
-li {
-    margin: 10px;
+.actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.actions a {
+    text-decoration: none;
     font-size: 18px;
 }
 
-.done {
+.edit-btn {
+    margin-top: 5px;
+    padding: 5px;
+    width: 100%;
+    border: none;
+    background: #333;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.done input {
     text-decoration: line-through;
     color: gray;
 }
